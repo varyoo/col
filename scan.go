@@ -26,19 +26,20 @@ type Row interface {
 	Scan(dest ...interface{}) error
 }
 
-// type Tweet struct {
-// 	Username string `col:"tweets.user_name"`
-// 	Text string `col:"tweets.text"`
-// }
+// Usage :
+//  type Tweet struct {
+//  	Username string `col:"tweets.user_name"`
+//  	Text string `col:"tweets.text"`
+//  }
 //
-// scanner := col.NewIndex(Tweet{}, "tweets.user_name", "tweets.text")
-// rows, _ := squirrel.Select("tweets.user_name", "tweets.text").From("tweets").Query()
+//  scanner := col.NewIndex(Tweet{}, "tweets.user_name", "tweets.text")
+//  rows, _ := squirrel.Select("tweets.user_name", "tweets.text").From("tweets").Query()
 //
-// for rows.Next() {
-// 	tweet := Tweet{}
+//  for rows.Next() {
+//  	tweet := Tweet{}
 //
-// 	scanner.Scan(rows, &tweet)
-// }
+//  	scanner.Scan(rows, &tweet)
+//  }
 func (index Index) Scan(row Row, dest interface{}) error {
 	return row.Scan(index.Pointers(dest)...)
 }
